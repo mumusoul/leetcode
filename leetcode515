@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 23 15:35:13 2018
+
+@author: 沐日光华
+"""
+#Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+class Solution:
+    def __init__(self):
+        self.root=TreeNode(None)
+        self.myQueue=[]
+    
+    def createTree(self, elem):
+        node=TreeNode(elem)
+        if self.root is None:
+            self.root=node
+        else:
+            q=[self.root]
+            while True:
+                pop_node=q.pop(0)
+                if pop_node.left is None:
+                    pop_node.left=node
+                    return
+                elif pop_node.right is None:
+                    pop_node.right=node
+                    return
+                else:
+                    q.append(pop_node.left)
+                    q.append(pop_node.right)
+                    
+    def largestValues(self, root):
+        if not root:
+            return []
+        res = []
+        nodeList = [root]
+        while nodeList:
+            nodeTemp = []
+            nodeNext = []          
+            for i in nodeList:
+                nodeTemp.append(i.val)               
+                if i.left:
+                    nodeNext.append(i.left)
+                if i.right:
+                    nodeNext.append(i.right)                
+            res.append(max(nodeTemp))
+            nodeList = nodeNext
+        return res
+
+       
