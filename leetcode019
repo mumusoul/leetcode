@@ -1,0 +1,71 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Dec  4 10:04:56 2018
+
+@author: 沐日光华
+"""
+from __future__ import print_function
+
+class ListNode(object):
+    def __init__(self,x):
+        self.val=x
+        self.next=None
+        
+class LinkList(object):
+    def __init__(self,p=None):
+        self.head=p
+        
+    def initList(self,data):
+        self.head=ListNode(data[0])
+        p=self.head
+        for i in data[1:]:
+            node=ListNode(i)
+            p.next=node
+            p=p.next
+    
+    def lenList(self):
+        p=self.head
+        count=1
+        while(p.next!=None):
+            p=p.next
+            count=count+1
+        return count
+    
+    def isEmpty(self):
+        if self.head.next == 0:
+            print("Empty List!")
+            return 1
+        else:
+            return 0
+    
+    def printList(self):
+       # if(self.isEmpty()):
+        #    exit(0)
+        p=self.head
+        while(p):
+            print("%d "%p.val,end='')
+            p=p.next
+            
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        p=ListNode(0)
+        p.next=head
+        np=head
+        count=1
+        while(count<n):
+            np=np.next
+            count=count+1
+        while(np.next):
+            p=p.next
+            np=np.next
+        if(p.next==head):
+            head=head.next
+        else:
+            p.next=p.next.next
+        return head
+    
