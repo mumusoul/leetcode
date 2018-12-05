@@ -1,0 +1,93 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Dec  4 19:50:59 2018
+
+@author: 沐日光华
+"""
+
+class Solution:
+    def minSubArrayLen1(self, s, nums):     #方法一
+        sum=0
+        count=0
+        i=0
+        j=i-1
+        newNum=[]
+        while(i<len(nums)):
+            while(sum<s and i<len(nums)):
+                sum=sum+nums[i]
+                i=i+1
+                count=count+1
+                if(sum>=s):
+                    newNum.append(count)
+            while(sum>=s):
+                j=j+1
+                sum=sum-nums[j]
+                count=count-1
+                if(sum>=s):
+                    newNum.append(count)
+        if(newNum==[]):
+            return 0
+        else:
+            return min(newNum)
+
+    def minSubArrayLen2(self, s, nums):     #方法二
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        if sum(nums) < s:
+            return 0
+        else:
+            l = 0
+            r = 0
+            sum_lr = 0
+            length = len(nums)
+            min_length = length + 1     #假设最大的长度为数组的长度+1
+            while l < length:
+                if r < length and sum_lr < s:   #r没超范围，而且子数组的和小于s
+                    sum_lr += nums[r]
+                    r += 1
+                else:
+                    sum_lr -= nums[l]
+                    l += 1
+                if sum_lr >= s:     #更新长度
+                    min_length = min(r-l,min_length)
+            return min_length
+
+    def SubArrayLen(self, s, nums):
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        sum=0
+        count=0
+        i=0
+        j=i-1
+        newNum=[]
+        while(i<len(nums)):
+            while(sum<s and i<len(nums)):
+                sum=sum+nums[i]
+                i=i+1
+                count=count+1
+                if(sum>=s):
+                    newNum.append(count)
+            while(sum>=s):
+                j=j+1
+                sum=sum-nums[j]
+                count=count-1
+                if(sum>=s):
+                    newNum.append(count)
+        return newNum
+
+def main():
+    testClass=Solution()
+    nums=[12,28,83,4,25,26,25,2,25,25,25,12]
+    print(testClass.minSubArrayLen1(213,nums))
+    print(testClass.minSubArrayLen2(134,nums))
+    print(testClass.SubArrayLen(213,nums))
+    print(testClass.SubArrayLen(134,nums))
+
+if __name__=='__main__':
+    main()
